@@ -1,0 +1,90 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define pb push_back
+#define translow transform(s.begin(),s.end(),s.begin(),::tolower);
+#define transup transform(s.begin(),s.end(),s.begin(),::toupper);
+#define endl "\n"
+#define fast ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+ll mod=1e9+7;
+ll n;
+vector<ll>adj[123456];
+vector<ll>ans;
+        
+
+        void bfs(vector<ll>start,vector<ll>end)
+        {
+            vector<ll>dist(n+1,LLONG_MAX);
+            queue<ll>q;
+            for(auto it:start)
+            {
+                dist[it]=0;
+                q.push(it);
+            }
+            
+            while(!q.empty())
+            {
+                ll cn=q.front();
+                q.pop();
+              //  cout<<cn<<" "<<dist[cn]<<endl;
+                for(auto it:adj[cn])
+                {
+                    if(dist[it]==LLONG_MAX)
+                    {
+                        dist[it]=dist[cn]+1;
+                        q.push(it);
+                    }
+                }
+
+            }
+                
+            for(auto it:end)
+            {
+                if(dist[it]!=LLONG_MAX)
+                {
+                    ans[it]=dist[it];
+                }
+            }
+
+
+        }
+ 
+int main() {
+                fast
+                #ifndef ONLINE_JUDGE
+                freopen("input.txt","r",stdin);
+                freopen("output.txt","w",stdout);
+                #endif
+
+                
+                cin>>n;
+                vector<ll>even,odd;
+                ans.resize(n+1,-1);
+                for(ll i=1;i<=n;i++)
+                {
+                    ll x;
+                    cin>>x;
+                    if(x%2==0)
+                        even.pb(i);
+                    else
+                        odd.pb(i);
+                    if(i-x>=1)
+                        adj[i-x].pb(i);
+                    if(i+x<=n)
+                        adj[i+x].pb(i);
+                }
+                
+             
+                
+                bfs(even,odd);
+                
+                
+                bfs(odd,even);
+                for(ll i=1;i<=n;i++)
+                    cout<<ans[i]<<" ";
+                cout<<endl;
+
+
+
+                return 0;
+            }

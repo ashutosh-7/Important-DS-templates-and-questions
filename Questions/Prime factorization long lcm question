@@ -1,0 +1,105 @@
+//Maximize LCM  Codechef
+
+
+
+
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define pb push_back
+#define translow transform(s.begin(),s.end(),s.begin(),::tolower);
+#define transup transform(s.begin(),s.end(),s.begin(),::toupper);
+#define endl "\n"
+#define fast ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+ll mod=1e9+7;
+ 
+ 
+int main() {
+                fast
+                #ifndef ONLINE_JUDGE
+                freopen("input.txt","r",stdin);
+                freopen("output.txt","w",stdout);
+                #endif
+
+                ll t;
+                cin>>t;
+                while(t--)
+                {
+
+                    ll n,m;
+                    cin>>n>>m;
+                    ll a[n];
+                    for(ll i=0;i<n;i++)
+                    cin>>a[i];
+
+                    vector<ll>factor(100000,0);
+
+                    //finding prime factor of all number
+                    // qki lcm store nhi kar skte jo lcm bana rahe hai wse store kar lenge
+                    for(ll i=0;i<n;i++)
+                    {
+                       
+                        for(ll j=2;j*j<=a[i];j++)
+                        {
+                            if(a[i]%j==0)
+                            {
+                                ll count=0;
+                                while(a[i]%j==0)
+                                {
+                                    count+=1;
+                                    a[i]/=j;
+                                }
+                                factor[j]=max(factor[j],count);
+                            }
+                        }
+                        factor[a[i]]=max((ll)1,factor[a[i]]);
+                    }
+                    // for(ll i=1;i<=m;i++)
+                    //     cout<<factor[i]<<" ";
+                    //     cout<<endl;
+                    ll ans=1;
+                    ll mx=1;
+                    for(ll i=1;i<=m;i++)
+                    {
+                        ll temp=1;
+                        ll x=i;
+                        for(ll j=2;j*j<=x;j++)
+                        {
+                            ll count=0;
+                            if(x%j==0)
+                            {
+
+                                while(x%j==0)
+                                {
+                                    count+=1;
+                                    x/=j;
+                                }
+                                if(count>factor[j])
+                                {
+                                    temp*=pow(j,count-factor[j]);
+                                }
+                            }
+                            // cout<<x<<" jk";
+                            
+                        }
+                        if(x>0){
+
+                            if(factor[x]==0)
+                            {
+                                temp*=x;
+
+                            }
+
+                        }
+                          // cout<<i<<" "<<temp<<" "<<factor[x]<<endl;
+                        if(temp>mx)
+                        {
+                            ans=i;
+                            mx=temp;
+                        }
+                    }
+                    cout<<ans<<endl;
+                }
+
+                return 0;
+            }

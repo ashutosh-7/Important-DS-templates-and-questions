@@ -1,0 +1,62 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define pb push_back
+#define translow transform(s.begin(),s.end(),s.begin(),::tolower);
+#define transup transform(s.begin(),s.end(),s.begin(),::toupper);
+#define endl "\n"
+#define fast ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+ll mod=1e9+7;
+vector<ll>adj[100000];
+bool visited[100000];
+bool instack[100000];
+                
+               bool dfs(ll source)
+                {   
+                   
+                    instack[source]=true;
+                    visited[source]=true;
+                    for(auto it:adj[source])
+                    {
+                            if((visited[it]==false and (dfs(it)==true ))or instack[it]==true)// mtlb agar ye node visited nhi hai aur espe dfs lagao dekho agar espe cycle aa raha hai yaa toh ye stack mai aa jaaye toh true print kar do
+                                return true;
+                    }
+
+                    instack[source]=false; //qki hum isko visit kar chuke ab ese stack mai rakhne ki jarurat nhi hai
+                    return false;
+
+                }
+ 
+ 
+int main() {
+                fast
+                #ifndef ONLINE_JUDGE
+                freopen("input.txt","r",stdin);
+                freopen("output.txt","w",stdout);
+                #endif
+
+                memset(visited,false,sizeof(visited));
+                memset(instack,false,sizeof(instack));
+                ll n,m;
+                cin>>n>>m;
+                for(ll i=0;i<m;i++)
+                {
+                ll a,b;
+                cin>>a>>b;
+                adj[a].pb(b);
+                // adj[b].pb(a);
+                }
+                for(ll i=1;i<=n;i++)
+                {
+                    if(visited[i]==false)
+                    {
+                        bool flag=dfs(i);
+                        if(flag)
+                            cout<<"Cycle present"<<endl;
+                        else
+                            cout<<"Cycle not present"<<endl;
+                    }
+                }
+
+                return 0;
+            }

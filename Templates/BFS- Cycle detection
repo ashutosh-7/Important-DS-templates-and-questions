@@ -1,0 +1,61 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define pb push_back
+#define translow transform(s.begin(),s.end(),s.begin(),::tolower);
+#define transup transform(s.begin(),s.end(),s.begin(),::toupper);
+#define endl "\n"
+#define fast ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+ll mod=1e9+7;
+vector<ll>adj[100000];
+bool visited[100000];
+ll parent[100000];
+                
+                ll bfs(ll source)
+                {
+                    memset(visited,false,sizeof(visited));
+                    queue<ll>q;
+                    q.push(source);
+                    visited[source]=true;
+                    parent[source]=source;
+                    while(!q.empty())
+                    {
+                        ll cn=q.front();
+                        q.pop();
+                        for(auto it:adj[cn])
+                        {
+                            if(visited[it]==true and parent[cn]!=it)  // eska mtlb jis node pe hum aaye hai wo node wsi ka parent toh nhi  esliye wse chod denge jaaise maaan lo bus ek edge hua 1-2
+                            {
+                                cout<<"Cycle present between "<<cn<<" & "<<it<<endl;
+                            }
+                            else if(visited[it]==false)
+                            {
+                                q.push(it);
+                                visited[it]=true;
+                                parent[it]=cn;
+                            }
+                        }
+                    }
+                }
+ 
+ 
+int main() {
+				        fast
+                #ifndef ONLINE_JUDGE
+                freopen("input.txt","r",stdin);
+                freopen("output.txt","w",stdout);
+                #endif
+
+                ll n,m;
+                cin>>n>>m;
+                for(ll i=0;i<m;i++)
+                {
+                ll a,b;
+                cin>>a>>b;
+                adj[a].pb(b);
+                adj[b].pb(a);
+                }
+                bfs(1);
+
+                return 0;
+            }

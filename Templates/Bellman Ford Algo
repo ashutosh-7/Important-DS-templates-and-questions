@@ -1,0 +1,80 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define pb push_back
+#define translow transform(s.begin(),s.end(),s.begin(),::tolower);
+#define transup transform(s.begin(),s.end(),s.begin(),::toupper);
+#define endl "\n"
+#define fast ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+ll mod=1e9+7;
+    ll n,m;
+
+        pair<ll, pair<ll,ll>>edges[100000];
+        ll dist[100000];
+   ll ford(ll source)
+   {
+            for(ll i=1;i<100000;i++)
+                dist[i]=LLONG_MAX;
+                dist[source]=0;
+
+                    for(ll j=0;j<n-1;j++)
+                    {
+                        for(ll i=0;i<m;i++)
+                        {
+                            ll sc=edges[i].second.first;
+                            ll d=edges[i].second.second;
+                            ll w=edges[i].first;
+                            if(dist[sc]!=LLONG_MAX and dist[d]>dist[sc]+w)
+                                dist[d]=dist[sc]+w;
+                        }
+                    }
+
+
+
+                    //detect negative cycle
+                    ll count=0;
+                    for(ll i=0;i<m;i++)
+                        {
+                            ll sc=edges[i].second.first;
+                            ll d=edges[i].second.second;
+                            ll w=edges[i].first;
+                            if(dist[d]!=LLONG_MAX and dist[d]>dist[sc]+w)
+                                count+=1;
+                        }
+                        return count;
+   }
+ 
+ 
+int main() {
+				fast
+                #ifndef ONLINE_JUDGE
+                freopen("input.txt","r",stdin);
+                freopen("output.txt","w",stdout);
+                #endif
+
+                 
+                cin>>n>>m;
+               
+                for(ll i=0;i<m;i++)
+                {
+                    ll a,b,c;
+                    cin>>a>>b>>c;
+                    edges[i]={c,{a,b}};
+                    // adj[b].pb({a,c});
+                }
+
+              ll count=ford(1);
+              // if(co.unt==0){
+                for(ll i=2;i<=n;i++)
+                {
+                   if(dist[i]==LLONG_MAX)
+                    cout<<1e9<<" ";
+                else
+                    cout<<dist[i]<<" ";
+                }
+            // }
+            // else
+            //     cout<<"Negative cycle found!"<<endl;
+
+                return 0;
+            }

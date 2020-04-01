@@ -1,0 +1,60 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define pb push_back
+#define translow transform(s.begin(),s.end(),s.begin(),::tolower);
+#define transup transform(s.begin(),s.end(),s.begin(),::toupper);
+#define endl "\n"
+#define fast ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+ll mod=1e9+7;
+ll adj[100][100];
+ll dx[]={-1,1,0,0};
+ll dy[]={0,0,1,-1};
+bool visited[100][100];
+ll n,m;
+                bool valid(ll x,ll y)
+                {
+                    if(x<=n and y<=m)
+                        return true;
+                    return false;
+                }
+
+        void dfs(ll x,ll y)
+        {
+            visited[x][y]=true;
+            adj[x][y]=-1;
+            for(ll i=0;i<4;i++)
+            {
+                if(valid(x+dx[i],y+dy[i]))
+                {
+                if(adj[x+dx[i]][y+dy[i]]==1 and visited[x+dx[i]][y+dy[i]]==false )
+                {
+                    dfs(x+dx[i],y+dy[i]);
+                }
+                }
+            }
+        } 
+
+ 
+ 
+int main() {
+				fast
+                #ifndef ONLINE_JUDGE
+                freopen("input.txt","r",stdin);
+                freopen("output.txt","w",stdout);
+                #endif
+                memset(visited,false,sizeof(visited));
+                
+                cin>>n>>m;
+                for(ll i=1;i<=n;i++)
+                {
+                    for(ll j=1;j<=m;j++)
+                        cin>>adj[i][j];
+                }
+                dfs((ll)1,(ll)1);
+                if(adj[n][m]==-1)
+                    cout<<"Yes"<<endl;
+                else
+                    cout<<"No"<<endl;
+                return 0;
+            }

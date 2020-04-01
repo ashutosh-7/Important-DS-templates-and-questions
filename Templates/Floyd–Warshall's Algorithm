@@ -1,0 +1,71 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define pb push_back
+#define translow transform(s.begin(),s.end(),s.begin(),::tolower);
+#define transup transform(s.begin(),s.end(),s.begin(),::toupper);
+#define endl "\n"
+#define fast ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+ll mod=1e9+7;
+ll adj[100][100];
+ll dist[100][100];
+ll n,m;
+ll inf=12345678;
+
+               void warshall()
+                {
+                    for(ll k=0;k<n;k++)  //intermediate
+                    {
+                        for(ll i=0;i<n;i++)  //source
+                        {
+                            for(ll j=0;j<n;j++)  //destinantion
+                            {
+                                if(dist[i][k]!=inf and dist[k][j]!=inf)
+                                {
+                                    if(dist[i][j]>dist[i][k]+dist[k][j])
+                                    {
+                                        dist[i][j]=dist[i][k]+dist[k][j];
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+ 
+ 
+int main() {
+				fast
+                #ifndef ONLINE_JUDGE
+                freopen("input.txt","r",stdin);
+                freopen("output.txt","w",stdout);
+                #endif
+                cin>>n>>m;
+
+                for(ll i=0;i<m;i++)
+                {
+                    ll a,b,c;
+                    cin>>a>>b>>c;
+                    adj[a][b]=c;
+                }
+             
+                for(ll i=0;i<n;i++)
+                {
+                    for(ll j=0;j<n;j++)
+                    {
+                        dist[i][j]=adj[i][j];
+                       
+                    }
+                    
+                }
+             
+                warshall();
+                for(ll i=0;i<n;i++)
+                {
+                    for(ll j=0;j<n;j++)
+                    {
+                        cout<<dist[i][j]<<" ";
+                    }
+                    cout<<endl;
+                }
+                return 0;
+            }

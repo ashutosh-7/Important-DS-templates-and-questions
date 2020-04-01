@@ -10,48 +10,43 @@ ll mod=1e9+7;
 vector<pair<ll,ll>>adj[100000];
 bool visited[100000];
 ll n;
-
-        ll prims(ll source)
+            
+            ll prims(ll source)
             {
                 ll ans=0;
-                priority_queue<pair<ll,ll> ,vector<pair<ll,ll>> ,greater<pair<ll,ll> > > q;  //min heap
-                q.push({0,source});
                 memset(visited,false,sizeof(visited));
+                 priority_queue<pair<ll,ll> ,vector<pair<ll,ll>> ,greater<pair<ll,ll> > > q;
+                q.push({0,source});
                 while(!q.empty())
                 {
-
                     ll cn=q.top().second;
                     ll weight=q.top().first;
                     q.pop();
-
-                    if(visited[cn]==true)
+                    if(visited[cn]==true)  //ye dekh lenge pehle se hai toh nhi lenge qki cycle aa jaayega
                         continue;
                     ans+=weight;
-                     // cout<<weight<<" "<<cn<<endl;
                     visited[cn]=true;
                     for(auto it:adj[cn])
                     {
-                        ll y=it.first;
-                        if(visited[y]==false)
-                            q.push({it.second,y});
-
+                        if(visited[it.second]==false)  //ye esliye hai qki cycle naa ho phir se visited waala esme nhi daalenge
+                        {
+                            q.push({it.second,it.first});
+                        }
                     }
-
-                }
-
-                return ans;
-
+                }  
+                return ans;               
             }
+
  
  
 int main() {
-				        fast
+				fast
                 #ifndef ONLINE_JUDGE
                 freopen("input.txt","r",stdin);
                 freopen("output.txt","w",stdout);
                 #endif
 
-                 ll m;
+                ll m;
                cin>>n>>m;
               
                for(ll i=0;i<m;i++)

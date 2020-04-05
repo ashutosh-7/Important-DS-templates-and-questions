@@ -1,0 +1,55 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define pb push_back
+#define endl "\n"
+#define fast ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+ll mod=1e9+7;
+
+int main() {
+				fast
+                #ifndef ONLINE_JUDGE
+                freopen("input.txt","r",stdin);
+                freopen("output.txt","w",stdout);
+                #endif
+                ll t;
+                cin>>t;
+                while(t--)
+                {
+                    ll n;
+                    cin>>n;
+                    ll arr[n+1];
+                    for(ll i=1;i<=n;i++)
+                        cin>>arr[i];
+                    ll x;
+                    cin>>x;
+                    ll dp[n+5][x+5];  //row=kitne coin liya hu abhi and col= sum kitna bacha hai banane ke liye
+                    for(ll i=0;i<=n;i++)
+                        for(ll j=0;j<=x;j++)
+                        dp[i][j]=0;
+
+                    for(ll i=0;i<=n;i++)
+                        dp[i][0]=1;
+                        dp[0][0]=1;
+                    for(ll i=1;i<=n;i++)
+                    {
+                        for(ll j=1;j<=x;j++)
+                        {
+                            ll op1=dp[i-1][j];  //mtlb ek kam coin leke kitna answer hai
+                            ll op2=0;
+                            if(arr[i]<=j)
+                            {
+                                op2=dp[i][j-arr[i]]; //mtlb wus coin ko le liya toh kitna ans hai
+                            }
+                            dp[i][j]=op1+op2;
+                            // cout<<dp[i][j]<<" ";
+                        }
+                        // cout<<endl;
+                    }
+
+                    cout<<dp[n][x]<<endl;
+
+                }
+
+                return 0;
+            }

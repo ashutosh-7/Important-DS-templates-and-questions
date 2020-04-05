@@ -1,0 +1,55 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define pb push_back
+#define endl "\n"
+#define fast ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+ll mod=1e9+7;
+
+                ll coin(ll i,ll n,ll x,ll arr[],ll dp[][500])
+                {
+                    if(n==0){
+                        return 1;
+                    }
+                    if(n<0)
+                        return 0;
+                    if(n>0 and i>x)
+                        return 0;
+
+                    if(dp[i][n]!=-1)
+                        return dp[i][n];
+                    else{
+                    ll op1=coin(i+1,n,x,arr,dp);
+                    ll op2=coin(i,n-arr[i],x,arr,dp);
+                    return dp[i][n]=op1+op2;
+                }
+                }
+
+int main() {
+				fast
+                #ifndef ONLINE_JUDGE
+                freopen("input.txt","r",stdin);
+                freopen("output.txt","w",stdout);
+                #endif
+                ll t;
+                cin>>t;
+                while(t--)
+                {
+                    ll n;
+                    cin>>n;
+                    ll arr[n+1];
+                    ll dp[500][500];   //row=kaun sa coin pe hai , column=kaun se number pe hai
+                    for(ll i=0;i<500;i++)
+                        for(ll j=0;j<500;j++)
+                            dp[i][j]=-1;
+                        
+                    for(ll i=1;i<=n;i++)
+                        cin>>arr[i];
+                    ll x;
+                    cin>>x;
+                    cout<<coin(1,x,n,arr,dp)<<endl;
+                   
+                }
+
+                return 0;
+            }

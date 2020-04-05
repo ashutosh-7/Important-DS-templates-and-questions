@@ -1,0 +1,60 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define pb push_back
+#define endl "\n"
+#define fast ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+ll mod=1e9+7;
+
+                    ll jump(ll start,ll n,ll arr[],ll dp[])
+                    {
+                        // cout<<start<<endl;
+                        if(start==n)  //last pe pahuch gaye
+                            return 0;
+                        if(arr[start]==0) //jump nhi le ppaunga
+                            return LLONG_MAX;
+                       
+                        if(dp[start]!=-1)
+                            return dp[start];
+                         ll ans=LLONG_MAX;
+                        for(ll i=1;i<=arr[start] and i<=n;i++)
+                        {
+                            if(i+start<=n){
+                            ll op1=jump(start+i,n,arr,dp);
+                            if(op1!=LLONG_MAX)
+                            ans=min(1+op1,ans);
+                    }
+                        }
+                        return dp[start]=ans;
+
+                    }
+
+int main() {
+                fast
+                #ifndef ONLINE_JUDGE
+                freopen("input.txt","r",stdin);
+                freopen("output.txt","w",stdout);
+                #endif
+                ll t;
+                cin>>t;
+                while(t--)
+                {
+                    ll n;
+                    cin>>n;
+                    ll arr[n+1];
+                    for(ll i=1;i<=n;i++)
+                        cin>>arr[i];
+                        
+                        ll dp[n+1];
+                        memset(dp,-1,sizeof(dp));
+
+                        
+                        ll x=jump(1,n,arr,dp);
+                        if(x!=LLONG_MAX)
+                            cout<<x<<endl;
+                        else
+                            cout<<-1<<endl;
+                }
+
+                return 0;
+            }

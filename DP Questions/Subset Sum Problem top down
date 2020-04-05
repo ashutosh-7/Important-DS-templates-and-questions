@@ -1,0 +1,63 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define pb push_back
+#define endl "\n"
+#define fast ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+ll mod=1e9+7;
+ll dp[101][30000];
+                
+                ll check(ll i,ll sum,ll arr[],ll n, ll dp[][30000])
+                {
+                    if(sum==0)
+                        return 1;
+                    
+                    if(sum<0)
+                        return 0;
+                    if(i>=n and sum!=0)
+                        return 0;
+                    
+                    if(dp[i][sum]!=-1)
+                        return dp[i][sum];
+                    else{
+                    
+                    ll op1=check(i+1,sum,arr,n,dp);
+                    ll op2=check(i+1,sum-arr[i],arr,n,dp);
+                    return dp[i][sum]=op1 or op2;
+                        }
+                }
+
+int main() {
+                fast
+                // #ifndef ONLINE_JUDGE
+                // freopen("input.txt","r",stdin);
+                // freopen("output.txt","w",stdout);
+                // #endif
+                ll t;
+                cin>>t;
+                while(t--)
+                {
+                    ll n;
+                    cin>>n;
+                    ll arr[n+3];
+                    ll sum=0;
+                    for(ll i=1;i<=n;i++){
+                        cin>>arr[i];
+                        sum+=arr[i];
+                    }
+                    // cout<<sum;
+                    
+                        for(ll i=0;i<101;i++)
+                            for(ll j=0;j<30000;j++)
+                                dp[i][j]=-1;
+                 
+                    ll flag=check(1,sum/2,arr,n,dp);
+                // cout<<flag;
+                    if(flag==1 and sum%2==0)
+                        cout<<"YES"<<endl;
+                    else
+                        cout<<"NO"<<endl;
+                }
+
+                return 0;
+            }

@@ -1,0 +1,56 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define pb push_back
+#define endl "\n"
+#define fast ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+ll mod=1e9+7;
+    
+    ll power(ll a,ll b)
+    {
+        if(b==0)
+            return 1;
+        if(b==1)
+            return a%mod;
+        ll x=power(a,b/2);
+        if(b%2==0)
+            return ((x%mod)*(x%mod))%mod;
+        else
+              return (((a*x)%mod)*(x%mod))%mod;
+    }
+    ll inverse(ll a)
+    {
+        return power(a,mod-2);
+    }
+
+int main() {
+				fast
+                // #ifndef ONLINE_JUDGE
+                // freopen("input.txt","r",stdin);
+                // freopen("output.txt","w",stdout);
+                // #endif
+                ll fact[10000];
+                fact[0]=1;
+                fact[1]=1;
+                for(ll i=2;i<10000;i++)
+                {
+                    fact[i]=(fact[i-1]%mod*i%mod)%mod;
+                }
+                ll t;
+                cin>>t;
+                while(t--)
+                {
+                    ll n,r;
+                    cin>>n>>r;
+                    if(n<r)
+                    {
+                        cout<<0<<endl;
+                        continue;
+                    }
+                    ll x=(fact[n]%mod*inverse(fact[n-r])%mod*inverse(fact[r])%mod)%mod;
+                    cout<<x<<endl;
+
+                }
+
+                return 0;
+            }

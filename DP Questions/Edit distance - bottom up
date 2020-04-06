@@ -1,0 +1,51 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define pb push_back
+#define endl "\n"
+#define fast ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+ll mod=1e9+7;
+           
+
+int main() {
+                fast
+                // #ifndef ONLINE_JUDGE
+                // freopen("input.txt","r",stdin);
+                // freopen("output.txt","w",stdout);
+                // #endif
+                ll t;
+                cin>>t;
+                while(t--)
+                {
+                    ll l1,l2;
+                    string s1,s2;
+                    cin>>l1>>l2>>s1>>s2;
+                    ll dp[l1+2][l2+2]; //l1 lenght ke character ke liye aur l2 lenght ke character ke liye
+                    memset(dp,0,sizeof(dp));
+                    for(ll i=0;i<l1+2;i++)
+                        dp[i][0]=i;
+                    for(ll i=0;i<l2+2;i++)
+                        dp[0][i]=i;
+                    
+                    for(ll i=1;i<=l1;i++)
+                    {
+                        for(ll j=1;j<=l2;j++)
+                        {
+                            char x=s1[i-1];
+                            char y=s2[j-1];
+                            ll ans=0;
+                           
+                            if(x==y)
+                                dp[i][j]=dp[i-1][j-1];
+                            else
+                            {
+                                dp[i][j]=1+min(dp[i-1][j],min(dp[i-1][j-1],dp[i][j-1]));
+                            }
+
+                        }
+                    }
+                    cout<<dp[l1][l2]<<endl;
+                }
+
+                return 0;
+            }

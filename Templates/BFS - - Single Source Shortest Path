@@ -7,13 +7,15 @@ using namespace std;
 #define endl "\n"
 #define fast ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
 ll mod=1e9+7;
-vector<ll>adj[100000];
-ll dist[100000];
+vector<ll>adj[100005];
+ll dist[100005];
+ll parent[100005]
 ll n,m;
             
             void sssp(ll source)
             {
                 memset(dist,-1,sizeof(dist));
+		memset(parent,-1,sizeof(parent));
                 queue<ll>q;
                 q.push(source);
                 dist[source]=0;
@@ -26,6 +28,7 @@ ll n,m;
                     {
                         if(dist[it]==-1)
                         {
+			    parent[it]=cn;
                             dist[it]=dist[cn]+1;
                             q.push(it);
                         }
@@ -52,6 +55,15 @@ int main() {
                 {
                     cout<<"Dist of node "<<i<<" from node 0 = "<<dist[i]<<endl;
                 }
+		 ll dest;
+                 cin>>dest;
+                 vector<ll> path;  
+                 path.pb(dest); 
+                 while (parent[dest] != -1) 
+                 { 
+                 path.pb(parent[dest]); 
+                 dest = parent[dest]; 
+                 } 
 
                 return 0;
             }

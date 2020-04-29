@@ -1,0 +1,47 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define ff first
+#define ss second
+#define pb push_back
+#define endl "\n"
+#define fast ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+ll mod=1e9+7;
+ll mx=1000000;
+ll factor[1000000];
+
+
+	   
+int main() {
+			fast
+		
+			memset(factor,-1,sizeof(factor));
+			for(ll i=2;i*i<=mx;i++)
+			{
+				if(factor[i]==-1)
+				{
+					for(ll j=i*2;j<mx;j+=i)
+					{
+						if(factor[j]==-1)
+						factor[j]=i;
+					}
+				}
+			}
+			
+
+	     	ll n;
+		    cin>>n;
+			
+			while(factor[n]!=-1)
+			{
+				
+				cout<<factor[n]<<" ";
+				
+				n/=factor[n];
+				
+			}
+			cout<<n;
+			
+			 
+			return 0;
+		 }	

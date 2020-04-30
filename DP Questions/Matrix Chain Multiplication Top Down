@@ -1,0 +1,51 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define ff first
+#define ss second
+#define pb push_back
+#define endl "\n"
+#define fast ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+ll mod=1e9+7;
+ll n;
+ll arr[500];
+ll dp[500][500];
+
+			ll solve(ll i,ll j)
+			{
+				if(i==j)
+				return 0;
+
+				if(dp[i][j]!=-1)
+				return dp[i][j];
+				ll ans=LLONG_MAX;
+				for(ll k=i;k<j;k++)
+				{
+					ans=min(ans,solve(i,k)+solve(k+1,j)+arr[i-1]*arr[k]*arr[j]);
+
+				}
+				return dp[i][j]=ans;
+			}
+
+int main() {
+			fast
+			#ifndef ONLINE_JUDGE
+			freopen("input.txt","r",stdin);
+			freopen("output.txt","w",stdout);
+			#endif	
+			
+			ll t;
+			cin>>t;
+			while(t--)
+			{
+				ll n;
+				cin>>n;
+				memset(dp,-1,sizeof(dp));
+				for(ll i=1;i<=n;i++)
+				cin>>arr[i];
+
+				cout<<solve(2,n)<<endl;
+			}
+			
+			return 0;
+		 }	

@@ -14,6 +14,14 @@ int main() {
 			freopen("input.txt","r",stdin);
 			freopen("output.txt","w",stdout);
 			#endif
+	
+	
+	
+			bitset<ll> x;  //it takes one bit of space where bool takes 1 byte of space which means bitset are 8 times more efficent than bool array
+	
+	
+	
+				
 
                //stl algorithms ;
 

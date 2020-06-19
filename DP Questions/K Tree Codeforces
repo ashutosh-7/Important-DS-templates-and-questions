@@ -1,0 +1,54 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define ff first
+#define ss second
+#define pb push_back
+#define endl "\n"
+#define fast ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+ll mod=1e9+7;	
+ll dp[102][2]; //sum , flag=0,1
+ll n,k,d;
+
+			ll solve(ll sum,ll flag)
+			{
+				if(sum==n)
+				{
+					return flag;
+				}
+
+				if(sum>n)
+				return 0;
+
+				if(dp[sum][flag]!=-1)
+				return dp[sum][flag];
+
+				ll ans=0;
+				for(ll i=1;i<=k;++i)
+				{
+					if(i<d and flag==1)
+					ans=(ans%mod+solve(sum+i,1ll)%mod)%mod;
+					else if(i<d and flag==0)
+					ans=(ans%mod+solve(sum+i,0ll)%mod)%mod;
+					else
+					ans=(ans%mod+solve(sum+i,1ll)%mod)%mod;
+					
+				}
+				return dp[sum][flag]=ans%mod;
+			}		
+	   
+int main() {
+			fast
+			#ifndef ONLINE_JUDGE
+			freopen("input.txt","r",stdin);
+			freopen("output.txt","w",stdout);
+			#endif
+
+			cin>>n>>k>>d;
+			memset(dp,-1,sizeof(dp));
+			cout<<solve(0ll,0ll)<<endl;
+			
+
+			
+			return 0;
+		 }	

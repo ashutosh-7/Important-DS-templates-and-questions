@@ -1,0 +1,57 @@
+
+//Ways to write n as sum of two or more positive integers
+
+//For a given number n > 0, find the number of different ways in which n can be written as a sum of at one or more positive integers.
+
+
+
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define ff first
+#define ss second
+#define pb push_back
+#define endl "\n"
+#define fast ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+ll mod=1e9+7;			
+	   
+int main() {
+			fast
+			#ifndef ONLINE_JUDGE
+			freopen("input.txt","r",stdin);
+			freopen("output.txt","w",stdout);
+			#endif
+
+			ll dp[205][205];
+
+			memset(dp,0,sizeof(dp));
+			for(ll i=0;i<200;i++)
+			{
+				dp[i][0]=1;
+				// dp[0][i]=1;
+			}
+
+			for(ll i=1;i<200;i++) //kitne number ko include kiye hai
+			{
+				for(ll j=1;j<200;j++) //har sum ke liye
+				{
+					if(j>=i)
+					{
+						dp[i][j]=dp[i-1][j]+dp[i][j-i];
+					}
+					else
+					{
+						dp[i][j]=dp[i-1][j];
+					}
+
+				}
+			}
+			// for(ll i=0;i<=10;i++)
+			// {
+			// 	for(ll j=0;j<=10;j++)
+			// 	cout<<dp[i][j]<<" ";
+			// 	cout<<endl;
+			// }
+
+			return 0;
+		 }	

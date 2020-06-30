@@ -1,3 +1,7 @@
+// stack mai vo value rakhenge jisska next smallest hum serach kar rahe hai
+
+
+
 #include <bits/stdc++.h>
 using namespace std;
 #define ll long long int

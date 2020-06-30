@@ -1,0 +1,126 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define ff first
+#define ss second
+#define pb push_back
+#define endl "\n"
+#define fast ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+ll mod=1e9+7;			
+	   
+int main() {
+			fast
+			#ifndef ONLINE_JUDGE
+			freopen("input.txt","r",stdin);
+			freopen("output.txt","w",stdout);
+			#endif
+
+			
+				ll n;
+                cin>>n;
+                ll arr[n];
+				ll dp1[n],dp2[n];
+                for(ll i=0;i<n;i++)
+                cin>>arr[i];
+
+				stack<pair<ll,ll>>st;
+				st.push({0ll,arr[0]});
+				unordered_map<ll,ll>ans;
+
+				for(ll i=1;i<n;i++)
+				{
+					while(!st.empty() and st.top().ss>arr[i])
+					{
+						ans[st.top().ff]=i;
+						st.pop();
+					}
+					st.push({i,arr[i]});
+				}
+				while(!st.empty())
+				{
+					ans[st.top().ff]=n;
+					st.pop();
+				}
+				dp1[n-1]=arr[n-1];
+				for(ll i=n-2;i>=0;i--)
+				{
+					ll x=ans[i];
+					ll diff=x-i;
+					
+					dp1[i]=diff*arr[i];
+
+					if(x<n)
+					dp1[i]+=dp1[x];
+					
+				}
+			
+				ans.clear();
+			
+                st.push({n-1ll,arr[n-1]});
+				for(ll i=n-2;i>=0;i--)
+				{
+					while(!st.empty() and st.top().ss>arr[i])
+					{
+						ans[st.top().ff]=i;
+						st.pop();
+					}
+					
+					st.push({i,arr[i]});
+				}
+				while(!st.empty())
+				{
+					
+					ans[st.top().ff]=-1;
+					st.pop();
+				}
+				dp2[0]=arr[0];
+				for(ll i=1;i<n;i++)
+				{
+					ll x=ans[i];
+					ll diff=i-x;
+					if(x==-1)
+					diff=i+1;
+					dp2[i]=diff*arr[i];
+
+					if(x!=-1)
+					dp2[i]+=dp2[x];
+					
+				}
+				vector<ll>xxx(n);
+				vector<ll>anss(n);
+				
+				ll sum=0,index=0;
+				for(ll i=0;i<n;i++)
+				{
+					ll cs=dp1[i]+dp2[i]-arr[i];
+					if(cs>sum)
+					{
+						index=i;
+						sum=cs;
+					}
+				}
+				for(ll i=0;i<n;i++)
+				xxx[i]=arr[i];
+				
+						ll prev=arr[index];
+						ll i=index;
+						for(ll j=i-1;j>=0;j--)
+						{
+							xxx[j]=min(prev,xxx[j]);
+							prev=xxx[j];
+						}
+						prev=arr[index];
+						for(ll j=i+1;j<n;j++)
+						{
+							xxx[j]=min(prev,xxx[j]);
+							prev=xxx[j];
+						}
+						for(auto it:xxx)
+				cout<<it<<" ";
+				
+				
+			
+			return 0;
+		 }	
+
+

@@ -1,0 +1,38 @@
+class Solution {
+    typedef long long int ll;
+public:
+   static bool cmp(string a,string b)
+    {
+        return a.size()<b.size();
+    }
+    string longestCommonPrefix(vector<string>& arr) {
+        
+        
+        if(arr.size()==0)
+        {
+            string ans="";
+            return ans;
+        }
+        string ans="";
+        ll pos=0;
+        
+        sort(arr.begin(),arr.end(),cmp);
+        
+        for(ll i=0;i<arr[0].size();i++)
+        {
+            ll count=0;
+            for(ll j=0;j<arr.size();j++)
+            {
+                if(arr[0][i]==arr[j][i])
+                    count+=1;
+            }
+            if(count==arr.size())
+                ans+=arr[0][i];
+            else
+                break;
+        }
+        
+        
+        return ans;
+    }
+};

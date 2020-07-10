@@ -1,0 +1,36 @@
+class Solution {
+    typedef long long int ll;
+public:
+    int romanToInt(string s) {
+        
+        map<char,ll>id;
+        id['I']=1;
+        id['V']=5;
+        id['X']=10;
+        id['L']=50;
+        id['C']=100;
+        id['D']=500;
+        id['M']=1000;
+        ll ans=0;
+        for(ll i=0;i<s.size();i++)
+        {
+            if(i==s.size()-1)
+            {
+                ans+=id[s[i]];
+                break;
+            }
+            char x=s[i];
+            char y=s[i+1];
+            if(id[x]>=id[y])
+            {
+                ans+=id[x];
+            }
+            else
+            {
+                ans+=id[y]-id[x];
+                i+=1;
+            }
+        }
+        return ans;
+    }
+};

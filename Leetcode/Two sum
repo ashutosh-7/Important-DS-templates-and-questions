@@ -1,0 +1,32 @@
+class Solution {
+    typedef int ll;
+public:
+    vector<int> twoSum(vector<int>& num  ,int target) {
+        vector<pair<ll,ll>>arr;
+        for(ll i=0;i<num.size();i++)
+            arr.push_back({num[i],i});
+        sort(arr.begin(),arr.end());
+        ll a=arr[0].first,b=arr[arr.size()-1].second;
+        ll i=0,j=arr.size()-1,flag=0;
+        while(i<j)
+        {
+            if(arr[i].first+arr[j].first==target)
+            {
+                a=arr[i].second;
+                b=arr[j].second;
+                break;
+            }
+            else if((arr[i].first+arr[j].first)>target)
+            {
+                j-=1;
+            }
+            else
+                i+=1;
+        }
+        vector<ll>ans;
+        ans.push_back(a);
+        ans.push_back(b);
+        return ans;
+        
+    }
+};

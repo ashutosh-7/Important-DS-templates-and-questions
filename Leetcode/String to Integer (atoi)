@@ -1,0 +1,70 @@
+class Solution {
+    typedef long long int ll;
+public:
+    int myAtoi(string s) {
+        
+        ll ans=0;
+        ll check=0;
+        ll flag=0,flag2=0;
+        ll check2=0;
+        for(ll i=0;i<s.size();i++)
+        {
+            if(s[i]==' ' and check==0)
+                continue;
+            
+             
+            if(check==0)
+            {
+                if(s[i]=='-' or s[i]=='+')
+                {
+                    
+                    if(s[i]=='-')
+                    flag=1;
+                    else
+                    flag2=1;
+                }
+                else if(s[i]>='0' and s[i]<='9')
+                {
+                 ans=(ans*10)+s[i]-'0';   
+                }
+                else
+                break;
+                
+                check=1;
+            }
+            else 
+            {
+                // if(ans==0 and check2==0 and (s[i]<'1' or s[i]>'9'))
+                //     continue;
+               
+                //cout<<s[i]<<" ";
+                if(s[i]>='0' and s[i]<='9')
+                {
+                     check2=1;
+                    ans=(ans*10)+s[i]-'0'; 
+                    
+                    
+                }
+                else
+                    break;
+                
+                
+               
+            }
+            if(ans>INT_MAX)
+                break;
+            
+            
+            
+        }
+        
+        if(flag)
+            ans*=-1;
+        if(ans>INT_MAX)
+            ans=INT_MAX;
+        if(ans<INT_MIN)
+            ans=INT_MIN;
+        
+        return ans;
+    }
+};

@@ -1,0 +1,67 @@
+//question you have given an array of 26 length which represents cost of characters of english alphabets
+//you have to find the characters whose sum forms a target sum which is given already and print maximum lexographically answer
+
+#include<bits/stdc++.h>
+#define ll long long int
+#define pb push_back
+#define mod 1000000007
+#define pi (3.141592653589)
+#define deb(n) cerr << #n << " = " << (n) << " ";
+using namespace std;
+
+int main() {
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+	cout << fixed;
+	cout.precision(10);
+	
+	int n = 26;
+	int a[n];
+	for(int i = 0; i < n; i++)
+	{
+		cin >> a[i];
+	}
+	int target;
+	cin >> target;
+	vector<vector<bool>> dp(target + 10, vector<bool> (26));
+	for(int i = 0; i < 26; i++)
+	{
+		dp[0][i] = true;
+	}
+	for(int i = 0; i < target; i++)
+	{
+		for(int j = 0; j < 26; j++)
+		{
+			if(dp[i][j] == false)
+				continue;
+			for(int k = 0; k < 26; k++)
+			{
+				if(i + a[k] <= target)
+				{
+					dp[i + a[k]][k] = true;
+				}
+			}
+		}
+	}
+	while(target)
+	{
+		for(int i = n - 1; i >= 0; i--)
+		{
+			int x = target;
+			if(dp[target][i])
+			{
+				cout << (char) ('a' + i);
+				target -= a[i];
+				break;
+			}
+		}
+		if(x == target)
+		{
+			cout << 0;
+			return 0;
+		}
+	}
+
+	return 0;
+}

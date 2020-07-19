@@ -1,0 +1,21 @@
+class Solution {
+    typedef int ll;
+public:
+    int numWaterBottles(int n, int x) {
+        
+        ll ans=n;
+        ll rem=n;
+        n=0;
+        
+        while(rem>=x)
+        {
+            n=rem/x;
+            rem=rem-(n*x)+n;
+            ans+=n;
+        }
+        
+        return ans;
+        
+        
+    }
+};

@@ -1,0 +1,78 @@
+#define pb push_back
+class Solution {
+    typedef int ll;
+public:
+    vector<ll>arr[100005];
+    ll visited[100005];
+    ll sum[100005][26];
+    ll start[100005];
+    ll endd[100005];
+    vector<ll>printOrder;
+            
+            void dfs(ll node,ll &b)
+			{
+				visited[node]=1;
+				start[node]=b;
+				printOrder.pb(node);
+				b+=1;
+
+				for(auto it:arr[node])
+				{
+					if(visited[it]==0)
+					{
+					dfs(it,b);
+					}
+				}
+				endd[node]=b;
+			}
+
+    
+    
+        vector<int> countSubTrees(int n, vector<vector<int>>& edges, string labels) {
+        memset(visited,0,sizeof(visited));
+        memset(sum,0,sizeof(sum));
+        
+        for(ll i=0;i<edges.size();i++)
+        {
+            
+            arr[edges[i][0]].pb(edges[i][1]);
+            arr[edges[i][1]].pb(edges[i][0]);
+        }
+        
+        ll b=0;
+		dfs(0,b);
+        
+        sum[0][labels[printOrder[0]]-'a']=1;
+        
+        for(ll i=1;i<n;i++)
+        {
+            ll pos=printOrder[i];
+            sum[i][labels[pos]-'a']=1;
+            for(ll j=0;j<26;j++)
+            {
+                sum[i][j]+=sum[i-1][j];
+            }
+        }
+              vector<ll>ans;
+        
+                for(ll i=0;i<n;i++)
+				{
+                    ll x=0;
+                    ll xx=start[i]-1;
+                    ll yy=endd[i]-1;
+					 ll pos=printOrder[i];
+                    x=sum[yy][labels[i]-'a'];
+                    if(xx>=0)
+                        x-=sum[xx][labels[i]-'a'];
+                    
+                   
+                    if(x==0)
+                        x=1;
+                    ans.pb(x);
+				}
+        
+        
+        return ans;
+        
+    }
+};

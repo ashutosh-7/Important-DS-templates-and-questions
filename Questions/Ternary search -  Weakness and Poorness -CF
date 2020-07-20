@@ -1,0 +1,98 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define ff first
+#define ss second
+#define pb push_back
+#define endl "\n"
+#define inf 2000000000
+#define fast ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+ll mod=1e9+7;	
+ll n,k;
+double arr[1000000];
+
+				double findMax(double x)
+				{
+					double sum=0.0,maxii=-inf;
+					for(ll i=0;i<n;i++)
+					{
+						if(sum<0)
+						sum=x+arr[i];
+						else
+						sum+=(x+arr[i]);
+						maxii=max(maxii,sum);
+					}
+					return maxii;
+				}
+
+
+				double findMin(double x)
+				{
+					double sum=0.0,maxii=inf;
+					for(ll i=0;i<n;i++)
+					{
+						
+						if(sum>0)
+						sum=x+arr[i];
+						else
+						sum+=(x+arr[i]);
+						maxii=min(maxii,sum);
+					}
+					return -(maxii);
+				}
+
+				double ternarySearch(double start,double end)
+				{
+					ll count=100;
+
+					while(count)
+					{
+						double mid1=(double)start+(end-start)/3.0;
+						double mid2=(double)start+2*(end-start)/3.0;
+						double f1=(double)max(findMax(mid1),findMin(mid1));
+						double f2=(double)max(findMax(mid2),findMin(mid2));
+
+						
+						if(f1<f2)
+						{
+							end=mid2;
+						}
+						else
+						{
+							start=mid1;
+						}
+						
+						count-=1;
+					}
+					
+					return start;
+				}
+	   
+int main() {
+			fast
+			#ifndef ONLINE_JUDGE
+			freopen("input.txt","r",stdin);
+			freopen("output.txt","w",stdout);
+			#endif
+
+		
+                cin>>n;
+                for(ll i=0;i<n;i++)
+                cin>>arr[i];
+
+				double x=ternarySearch(-10001.0,10001.0);
+				double f1=max(findMax(x),findMin(x));
+				cout<<fixed<<setprecision(8)<<f1<<endl;
+
+				// for(ll i=0;i<=10;i++)
+				// {
+					
+				// 	double f2=max(findMax(i),findMin(i));
+				// 	cout<<f2<<endl;
+				// }
+			
+			return 0;
+		 }	
+
+
+ 

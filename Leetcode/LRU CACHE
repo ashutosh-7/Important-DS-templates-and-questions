@@ -1,0 +1,65 @@
+class LRUCache {
+    typedef int ll;
+public:
+    ll mx;
+    list<ll>cache; //linked list
+    unordered_map<ll,pair<ll,list<ll>::iterator>>check;  //map<key,pair<value,list node address>>
+    
+    LRUCache(int capacity) {
+        mx=capacity;
+        cache.clear();
+    }
+void moveFront(unordered_map<ll, pair<ll,list<ll>::iterator>> :: iterator it) {
+        
+        cache.erase(it->second.second);
+        // insert a new node at front for the key
+        cache.emplace_front(it->first);
+        // update the ptr addr of node for the current key
+        it->second.second = cache.begin();
+    }
+    
+    int get(int key) {
+        
+        auto it=check.find(key);
+        if(it!=check.end())
+        {
+            moveFront(it);
+            return check[key].first;
+        }
+        else
+            return -1;
+        
+    }
+    
+    void put(int key, int value) {
+        
+        auto it=check.find(key);
+        if(it!=check.end())
+        {
+           check[key].first=value;
+            moveFront(it);
+        }
+        else
+        {
+            if(cache.size()>=mx)
+            {
+                //removing
+                auto it=cache.back();
+                cache.erase(check[it].second);
+                check.erase(it);
+            }            
+            //adding
+            cache.push_front(key);
+             auto it=cache.begin();
+            check[key]={value,it};
+        }
+        
+    }
+};
+
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache* obj = new LRUCache(capacity);
+ * int param_1 = obj->get(key);
+ * obj->put(key,value);
+ */

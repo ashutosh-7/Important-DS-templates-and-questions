@@ -1,0 +1,68 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define ff first
+#define ss second
+#define pb push_back
+#define endl "\n"
+#define inf 2000000000
+#define fast ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+ll mod=1e9+7;			
+
+ll n;
+ll val[502];
+ll weight[502];
+ll dp[502][10002];
+
+            ll solve(ll id,ll sum)
+            {
+              if(sum==0)
+              return 0;
+              if(id>n or sum<0)
+              return inf;
+
+              if(dp[id][sum]!=-1)
+              return dp[id][sum];
+
+              ll op1=val[id]+solve(id,sum-weight[id]);
+              ll op2=solve(id+1,sum);
+
+              return dp[id][sum]=min(op1,op2);
+
+            }
+
+int main() {
+			fast
+		  #ifndef ONLINE_JUDGE
+			freopen("input.txt","r",stdin);
+			freopen("output.txt","w",stdout);
+			#endif
+
+			ll t;
+			cin>>t;
+			while(t--)
+			{
+            ll w,m;
+            cin>>m>>w;
+            w-=m;
+            cin>>n;
+            
+            for(ll i=1;i<=n;i++)
+            {
+              cin>>val[i]>>weight[i];
+            }
+            memset(dp,-1,sizeof(dp));
+            ll x= solve(1,w);
+            if(x==inf)
+            {
+              cout<<"This is impossible."<<endl;
+            }
+            else
+            {
+              cout<<"The minimum amount of money in the piggy-bank is "<<x<<"."<<endl;
+            }
+            
+
+			}
+			return 0;
+		 }	

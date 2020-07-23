@@ -1,0 +1,64 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define ff first
+#define ss second
+#define pb push_back
+#define endl "\n"
+#define inf 2000000000
+#define fast ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+ll mod=1e9+7;			
+ll dp[1000005];
+ll val[100005];
+ll n;
+vector<pair<ll,pair<ll,ll>>>arr;
+
+          ll find(ll i)
+          {
+            for(ll j=i-1;j>=0;j--)
+            {
+              if(arr[i].ss.ff>=arr[j].ff)
+              return j;
+            }
+            return -1;
+          }
+       
+int main() {
+			fast
+			#ifndef ONLINE_JUDGE
+			freopen("input.txt","r",stdin);
+			freopen("output.txt","w",stdout);
+			#endif
+			ll t;
+			cin>>t;
+			while(t--)
+			{
+				       cin>>n;
+               for(ll i=1;i<=n;i++)
+               {
+                 ll a,b,c;
+                 cin>>a>>b>>c;
+                 b=b+a;
+                 arr.pb({b,{a,c}});
+               }
+               sort(arr.begin(),arr.end());
+              
+               memset(dp,0,sizeof(dp));
+               dp[0]=arr[0].ss.ss;
+
+               for(ll i=1;i<n;i++)
+               {
+                 ll x=find(i);
+                 ll y=0;
+                 if(x>=0)
+                 y=dp[x];
+                 dp[i]=max(arr[i].ss.ss+y,dp[i-1]);
+               }
+               cout<<dp[n-1]<<endl;
+               arr.clear();
+                
+			}
+			return 0;
+		 }	
+
+

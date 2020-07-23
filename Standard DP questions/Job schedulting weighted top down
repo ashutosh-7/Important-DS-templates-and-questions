@@ -1,0 +1,101 @@
+/*1
+5
+1 2 20
+2 3 20
+3 7 100 
+4 2 70 
+6 3 60
+ans =150*/
+
+//recursive mai sort karte hai starting time pe but iterative mai ending time pe...
+//recursive mai esliye starting time pe karte hai q ki do state leni hoti hai hme
+//id aur id+1 jab hm id+1 lete hai toh hme valid state pe aana hota hai
+//jaaise agar id valid state hoga toh id+1 hmesa valid hoga qki wska starting time i se jaada h hoga q ki hmne sort kiya hai starting pe
+//iterative mai kya hota hai ki hme jaada se jaada time slots lene hai agar starting se sort kar denge pata chala wo last pe khtam ho raha toh flatu hi hai
+//esliye ending se sort karenge q ki jaada se jaada states lene hai hme
+
+
+
+
+
+
+
+
+
+
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define ff first
+#define ss second
+#define pb push_back
+#define endl "\n"
+#define inf 2000000000
+#define fast ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+ll mod=1e9+7;			
+ll dp[1000005];
+ll val[100005];
+ll n;
+vector<pair<ll,pair<ll,ll>>>arr;
+
+          ll find(ll i)
+          {
+            for(ll j=i+1;j<arr.size();j++)
+            { 
+              
+              if(arr[j].ff>=arr[i].ss.ff)
+              {
+                return j;
+              }
+            } 
+            return n;
+          }
+        
+
+          ll solve(ll id)
+          {
+            if(id>=n)
+            return 0;
+
+            if(dp[id]!=-1)
+            return dp[id];
+
+            ll j=find(id);
+           
+          //  cout<<"first"<<" "<<id<<" "<<j<<" "<<dp[id]<<endl;
+            ll op1=arr[id].ss.ss+solve(j);
+              // cout<<"second"<<" "<<id<<" "<<j<<" "<<op1<<" "<<dp[id]<<endl;
+            ll op2=solve(id+1);
+            //  cout<<"third"<<" "<<id<<" "<<j<<" "<<op2<<" "<<dp[id]<<endl;
+
+            return dp[id]=max(op1,op2);
+          }
+	   
+int main() {
+			fast
+			
+			ll t;
+			cin>>t;
+			while(t--)
+			{
+				       cin>>n;
+               for(ll i=1;i<=n;i++)
+               {
+                 ll a,b,c;
+                 cin>>a>>b>>c;
+                 b=b+a;
+                 arr.pb({a,{b,c}});
+               }
+               sort(arr.begin(),arr.end());
+              // for(ll i=0;i<n;i++)
+              //  cout<<arr[i].ss.ff<<" "<<arr[i].ff<<" "<<arr[i].ss.ss<<endl;
+               memset(dp,-1,sizeof(dp));
+               cout<<solve(0)<<endl;
+
+               arr.clear();
+                
+			}
+			return 0;
+		 }	
+
+

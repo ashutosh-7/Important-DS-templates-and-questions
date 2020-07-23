@@ -1,0 +1,42 @@
+class Solution {
+    typedef int ll;
+public:
+    vector<pair<ll,pair<ll,ll>>>arr;
+    ll dp[100005];
+    ll find(ll id)
+    {
+        for(ll i=id+1;i<arr.size();i++)
+        {
+            if(arr[i].second.first>=arr[id].first)
+                return i;
+        }
+        return 100000000;
+    }
+    
+    ll solve(ll id)
+    {
+        if(id>=arr.size())
+            return 0;
+        if(dp[id]!=-1)
+            return dp[id];
+        ll j=find(id);
+        cout<<"first"<<" "<<id<<" "<<j<<endl;
+        ll op1=arr[id].second.second+solve(j);
+         cout<<"second"<<" "<<id<<" "<<j<<" "<<op1<<endl;
+        ll op2=solve(id+1);
+         cout<<"third"<<" "<<id<<" "<<j<<" "<<op2<<endl;
+            
+        return dp[id]=max(op1,op2);
+    }
+    
+    
+    int jobScheduling(vector<int>& startTime, vector<int>& endTime, vector<int>& profit)     {
+        for(ll i=0;i<startTime.size();i++)
+            arr.push_back({endTime[i],{startTime[i],profit[i]}});
+        memset(dp,-1,sizeof(dp));
+        sort(arr.begin(),arr.end());
+        
+        return solve(0);
+        
+    }
+};

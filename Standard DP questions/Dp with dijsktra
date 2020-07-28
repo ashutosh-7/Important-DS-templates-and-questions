@@ -1,0 +1,100 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define ff first
+#define ss second
+#define pb push_back
+#define endl "\n"
+#define inf 2000000000
+#define fast ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+ll mod=1e9+7;	
+ll dp[150][20000];		
+
+			struct node{
+				ll dest;
+				ll cost;
+				ll len;
+			};
+	   
+int main() {
+			fast
+			
+
+			ll t;
+			cin>>t;
+			while(t--)
+			{
+				ll k,n,m;
+				cin>>k>>n>>m;
+
+				vector<node>arr[n+2];
+				
+				for(ll i=1;i<=m;i++)
+				{
+					ll a,b,c,d;
+					cin>>a>>b>>c>>d;
+
+					node temp;
+					temp.dest=b;
+					temp.len=c;
+					temp.cost=d;
+
+					arr[a].pb(temp);
+				}
+			
+				for(ll i=0;i<=n;i++)
+				for(ll j=0;j<=k;j++)
+				dp[i][j]=LLONG_MAX;
+
+				priority_queue<pair<ll,pair<ll,ll>> ,vector<pair<ll,pair<ll,ll>>> ,greater<pair<ll,pair<ll,ll>>>>q;
+
+				//distance, destinantion, cost
+				q.push({0,{1,0}});
+				dp[1][0]=0;
+			
+				ll ans=LLONG_MAX;
+				while(!q.empty())
+				{
+					ll dest=q.top().ss.ff;
+					ll dist=q.top().ff;
+					ll money=q.top().ss.ss;
+
+					q.pop();
+
+					if(money>k)
+					{
+						continue;
+					}
+					if(dest==n and money<=k)
+					{
+						ans=min(ans,dist);
+					}
+
+					for(auto it:arr[dest])
+					{
+						ll nn=it.dest;
+						ll costAdd=it.cost;
+						ll lenAdd=it.len;
+
+						
+						if(money+costAdd<=k)
+						{
+							if(dp[nn][money+costAdd]>dp[dest][money]+lenAdd)
+							{
+								dp[nn][money+costAdd]=dp[dest][money]+lenAdd;
+								q.push({dp[nn][money+costAdd],{nn,money+costAdd}});
+							}
+						}
+					}
+					
+				}
+				if(ans!=LLONG_MAX)
+				cout<<ans<<endl;
+				else
+				cout<<-1<<endl;
+                
+			}
+			return 0;
+		 }	
+
+

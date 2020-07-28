@@ -1,0 +1,61 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define ff first
+#define ss second
+#define pb push_back
+#define endl "\n"
+
+#define fast ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+ll mod=1e9+7;	
+
+ll inf=2000000000000;
+ll n,need1,need2;
+ll oxy[1005];
+ll nitro[1005];
+ll wt[1005];
+ll dp[1006][25][85];
+			ll solve(ll id,ll oxygen,ll nitrogen)
+			{
+				if(oxygen<=0 and nitrogen<=0)
+				return 0;
+
+				if(id>n)
+				return inf;
+
+				if(dp[id][oxygen][nitrogen]!=-1)
+				return dp[id][oxygen][nitrogen];
+
+				ll op1=inf;
+				ll op2=inf;
+				dp[id][oxygen][nitrogen]=inf;
+
+				op1=min(op1,wt[id]+solve(id+1,max(0ll,oxygen-oxy[id]),max(0ll,nitrogen-nitro[id])));
+				op2=min(op2,solve(id+1,oxygen,nitrogen));
+
+				return dp[id][oxygen][nitrogen]=min(op1,op2);
+
+
+			}
+
+	   
+int main() {
+			fast
+		
+			ll t;
+			cin>>t;
+			while(t--)
+			{
+				cin>>need1>>need2;
+				cin>>n;
+				for(ll i=1;i<=n;i++)
+				cin>>oxy[i]>>nitro[i]>>wt[i];
+
+				memset(dp,-1,sizeof(dp));
+				cout<<solve(1,need1,need2)<<endl;
+
+			}
+			return 0;
+		 }	
+
+

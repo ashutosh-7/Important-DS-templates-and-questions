@@ -1,0 +1,91 @@
+	/**
+	*    author:  accesss_denied
+	**/
+	#include <bits/stdc++.h>
+	using namespace std;
+	#define ll long long int
+	#define ff first
+	#define ss second
+	#define pb push_back
+	#define endl "\n"
+	#define fast ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+	ll mod=1e9+7;			
+	ll inf=1e18;
+
+	int main() {
+				fast
+				#ifndef ONLINE_JUDGE
+				freopen("input.txt","r",stdin);
+				freopen("output.txt","w",stdout);
+				#endif
+
+
+				ll n,m;
+				cin>>n>>m;
+				ll sx,sy,dx,dy;
+				cin>>sx>>sy>>dx>>dy;
+
+				char arr[n+2][m+2];
+				for(ll i=1;i<=n;i++)
+				for(ll j=1;j<=m;j++)
+				cin>>arr[i][j];
+
+				deque<ll>q;
+				q.push_back(sx);
+				q.push_back(sy);
+				ll dp[n+2][m+2];
+				for(ll i=1;i<=n;i++)
+				for(ll j=1;j<=m;j++)
+				dp[i][j]=inf;
+
+				dp[sx][sy]=0;
+				while(!q.empty())
+				{
+					ll cx=q.front();
+					q.pop_front();
+					ll cy=q.front();
+					q.pop_front();
+
+					// cout<<cx<<" "<<cy<<endl;
+
+					for(ll x=max(1ll,cx-2);x<=min(n,cx+2);x++)
+					{
+						for(ll y=max(1ll,cy-2);y<=min(m,cy+2);y++)
+						{
+							if(arr[x][y]=='#')
+							continue;
+
+							ll dist= abs(x-cx)+abs(y-cy);
+							if(dist<=1)
+							dist=0;
+							else
+							dist=1;
+							if(dp[cx][cy]+dist<dp[x][y])
+							{
+								dp[x][y]=dp[cx][cy]+dist;
+								if(dist==0)
+								{
+									q.push_front(y);
+									q.push_front(x);
+								}
+								else
+								{
+									q.push_back(x);
+									q.push_back(y);
+								}
+							}
+						}
+					}
+				}
+				
+
+				if(dp[dx][dy]==inf)
+				cout<<-1;
+				else
+				cout<<dp[dx][dy];
+
+				
+				return 0;
+			}	
+
+

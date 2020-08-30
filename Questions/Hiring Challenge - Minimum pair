@@ -1,0 +1,45 @@
+	/**
+	*    author:  accesss_denied
+	**/
+	#include <bits/stdc++.h>
+	using namespace std;
+	#define ll long long int
+	#define ff first
+	#define ss second
+	#define pb push_back
+	#define endl "\n"
+	#define fast ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+	ll mod=1e9+7;			
+	ll inf=1e18;
+
+	int main() {
+			
+					int n;
+					cin>>n;
+					int arr[n];
+					for(int i=0;i<n;i++)
+					cin>>arr[i];
+
+          set<int >s;
+          map<int ,int >id;
+          int ans=inf;
+          s.insert(arr[0]);
+          id[arr[0]]=1;
+          for(int i=1;i<n;i++)
+          {
+            auto it=s.lower_bound(arr[i]);
+            int x=(*it);
+            if(id.find(x)!=id.end())
+            {
+              int diff=abs(x-arr[i]);
+              ans=min(diff,ans);
+            }
+            s.insert(arr[i]);
+            id[x]=1;
+          }
+					cout<<ans;
+				
+				return 0;
+			}	
+
+

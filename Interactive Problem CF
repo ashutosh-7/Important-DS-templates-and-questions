@@ -1,0 +1,118 @@
+Problems -  use "cout.flush();" after each output
+https://codeforces.com/contest/1407/problem/C
+
+	/**
+	*    author:  accesss_denied
+	**/
+	#include <bits/stdc++.h>
+	using namespace std;
+	#define ll long long int
+	#define ff first
+	#define ss second
+	#define pb push_back
+	#define endl "\n"
+	#define fast ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+	ll mod=1e9+7;			
+	ll inf=1e18;
+
+				ll query(ll x,ll y)
+				{
+						cout<<"? "<<x<<" "<<y<<endl;
+						cout.flush();
+						ll xx; cin>>xx;
+						if(xx==-1)
+						exit(0);
+						return xx;
+				}
+
+	int main() {
+				fast
+				
+				ll t;
+				t=1;
+				while(t--)
+				{
+
+					ll n;
+					cin>>n;
+					if(n==1)
+					{
+						cout<<"! "<<1<<endl;
+						cout.flush();
+						return 0;
+					}
+					ll ans[n+2]={0};
+					ll id=-1;
+					ll x,y;
+					for(ll i=1;i<n;i=i+2)
+					{
+							ll x=query(i,i+1);
+							ll y=query(i+1,i);
+							
+							if(x>y)
+							ans[i]=x;
+							else 
+							ans[i+1]=y;
+					}
+					ll len=n/2;
+					
+					while(len!=0)
+					{
+						vector<ll>rem;
+						for(ll i=1;i<=n;i++)
+						{
+							if(ans[i]==0)
+							rem.pb(i);
+						}
+
+						for(ll i=0;i<rem.size()-1;i+=2)
+						{
+							// cout<<rem[i]<<" "<<rem[i+1]<<endl;
+							ll x=query(rem[i],rem[i+1]);
+							ll y=query(rem[i+1],rem[i]);
+							if(x>y)
+							ans[rem[i]]=x;
+							else 
+							ans[rem[i+1]]=y;
+						}
+						rem.clear();
+						for(ll i=1;i<=n;i++)
+						{
+							if(ans[i]==0)
+							rem.pb(i);
+						}
+						len=rem.size();
+						// cout<<len<<endl;
+						if(len<=1)
+						break;
+					}
+					ll arr[n+2]={0};
+					for(ll i=1;i<=n;i++)
+					{
+						arr[ans[i]]=1;
+					}
+					ll xxx;
+					for(ll i=1;i<=n;i++)
+					{
+						if(arr[i]==0){
+							xxx=i;
+						break;
+						}
+					}
+					for(ll i=1;i<=n;i++)
+					{
+						if(ans[i]==0)
+						ans[i]=xxx;
+					}
+
+					
+
+					cout<<"! ";
+					for(ll i=1;i<=n;i++)
+					cout<<ans[i]<<" ";
+					cout<<endl;
+				}
+				return 0;
+			}	
+
+

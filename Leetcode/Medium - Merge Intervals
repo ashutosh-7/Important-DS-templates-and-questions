@@ -1,0 +1,62 @@
+//sorting done on starting time and with the help of max and min variables we can check continuous overlap segment
+
+
+
+class Solution {
+public:
+    vector<vector<int>> merge(vector<vector<int>>& intervals) {
+        
+        vector<pair<int,int>>arr;
+        if(intervals.size()<2)
+            return intervals;
+        for(int i=0;i<intervals.size();i++)
+        {
+            arr.push_back({intervals[i][0],intervals[i][1]});
+        }
+        sort(arr.begin(),arr.end());
+        vector<pair<int,int>>ans;
+        int mn=arr[0].first;
+        int mx=arr[0].second;
+        
+        for(int i=1;i<arr.size();i++)
+        {
+            int x1=arr[i].first;
+            int y1=arr[i].second;
+            
+            // cout<<mn<<" "<<mx<<" --  "<<x1<<" "<<y1<<endl;
+            if(x1<=mx)
+            {
+                //dono overlap kar rahe hai
+                mn=min(mn,x1);
+                mx=max(mx,y1);
+                if(i==arr.size()-1)
+                    ans.push_back({mn,mx});
+            }
+            else if(x1>mx and i!=arr.size()-1)
+            {
+                ans.push_back({mn,mx});
+                mn=arr[i].first;
+                mx=arr[i].second;
+            
+            }
+            else
+            {
+                ans.push_back({mn,mx});
+                ans.push_back({x1,y1});
+            }
+            
+        }
+        
+        int n=ans.size();
+      
+        vector<vector<int>>arr1(n);
+        sort(ans.begin(),ans.end());
+        for(int i=0;i<n;i++)
+        {
+            arr1[i].push_back(ans[i].first);
+            arr1[i].push_back(ans[i].second);
+        }
+        return arr1;
+        
+    }
+};

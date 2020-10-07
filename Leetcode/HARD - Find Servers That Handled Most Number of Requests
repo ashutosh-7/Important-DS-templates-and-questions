@@ -1,0 +1,46 @@
+class Solution {
+public:
+    vector<int> busiestServers(int k, vector<int>& arrival, vector<int>& load) {
+    
+        set<int>available;
+        map<int,int>count;
+        for(int i=0;i<k;i++)
+            available.insert(i);
+        int mx=0;
+        priority_queue<pair<int,int> ,vector<pair<int,int>> ,greater<pair<int,int>>>busy;
+        for(int i=0;i<arrival.size();i++)
+        {
+            
+            //i+1 th time pe jeetne server free ho skte hai wnhe free kar dunga
+            while(!busy.empty() and busy.top().first<arrival[i])
+            {
+                int y=busy.top().first;
+                int x=busy.top().second;
+                available.insert(x);
+                busy.pop();
+            }
+            if(available.size()==0)
+                continue ;   //drop this packet because we don't have any free server
+    
+            //i%k se find karna shuru karunga
+            auto it=available.lower_bound(i%k);
+            if(it==available.end())
+                it=available.begin();
+            count[*it]+=1;
+            mx=max(count[*it],mx);
+            busy.push({arrival[i]+load[i]-1,*it});
+            available.erase(it);
+        }
+        vector<int>ans;
+        for(auto it:count)
+        {
+            int x=it.first;
+            int y=it.second;
+            // cout<<x<<" "<<y<<" "<<mx<<endl;
+            if(y==mx)
+                ans.push_back(x);
+        }
+         return ans;
+    }
+   
+};

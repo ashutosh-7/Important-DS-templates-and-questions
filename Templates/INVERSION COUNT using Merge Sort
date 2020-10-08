@@ -1,7 +1,6 @@
 	/**
 	*    author:  accesss_denied
 	**/
-  
 	#include <bits/stdc++.h>
 	using namespace std;
 	#define int long long int
@@ -12,8 +11,8 @@
 	#define fast ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
 	int mod=1e9+7;			
 	int inf=1e18;
-	int ans=0;
-					void merge(vector<int>& arr, int start,int mid,int end)
+
+					int merge(vector<int>& arr, int start,int mid,int end)
 					{
 						vector<int>arr1;
 						for(int i=start;i<=mid;i++)
@@ -22,7 +21,7 @@
 						for(int i=mid+1;i<=end;i++)
 						arr2.pb(arr[i]);
 
-						int i=0,j=0;
+						int i=0,j=0;	int ans=0;
 						int m=mid-start;
 						int n=end-mid-1;
 						int point=start;
@@ -37,25 +36,28 @@
 							{
 								arr[point++]=arr2[j];
 								j+=1;
-								ans+=(mid-(i+start)+1);         //this is where we are counting inversions
+								ans+=(mid-(i+start)+1);
 							}
 						}
 						while(i<=m)
 						arr[point++]=arr1[i++];
 						while(j<=n)
 						arr[point++]=arr2[j++];
+						return ans;
 					}
 
-					void mergesort(vector<int>& arr,int start,int end)
+					int mergesort(vector<int>& arr,int start,int end)
 					{
 						if(end-start<=0)
-						return ;
+						return 0;
 
 						int mid=(start+end)/2;
-						mergesort(arr,start,mid);
-						mergesort(arr,mid+1,end);
+						int ans=0;
+						ans+=mergesort(arr,start,mid);
+						ans+=mergesort(arr,mid+1,end);
 						
-						merge(arr,start, mid, end);
+						ans+=merge(arr,start, mid, end);
+						return ans;
 					}
 
 	int32_t  main() {
@@ -69,9 +71,7 @@
     				vector<int>arr(n);
     				for(int i=0;i<n;i++)
     				cin>>arr[i];	
-                    ans=0;
-    				mergesort(arr,0,n-1);
-    				cout<<ans<<endl;
+    				cout<<mergesort(arr,0,n-1)<<endl;
     				// for(int i=0;i<n;i++)
     				// cout<<arr[i]<<" ";
                 }

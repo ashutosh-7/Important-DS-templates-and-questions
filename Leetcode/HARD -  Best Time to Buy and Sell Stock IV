@@ -1,0 +1,48 @@
+//Time O(M*N)
+//space O(M*N) we can further optimise space using bottom up
+
+
+class Solution {
+public:
+   
+    int solve(int id,vector<int>& prices,int k,int flag,int n,vector<vector<vector<int>> > &dp)
+    {
+        if(k<=0 or id>=n)
+            return 0;
+        
+        if(dp[id][k][flag]!=-1)
+            return dp[id][k][flag];
+        
+        int x=0,y=0;
+         //skip
+        x=solve(id+1,prices,k,flag,n,dp);
+        
+        if(flag==0)
+        {
+            //only option to buy
+            y=solve(id+1,prices,k,1,n,dp)-prices[id];
+        }
+        else
+        {
+            //sell
+            y=prices[id]+solve(id+1,prices,k-1,0,n,dp);
+        }
+        return dp[id][k][flag]=max(x,y);
+    }
+    int maxProfit(int k, vector<int>& prices) {
+        int n=prices.size();
+        int x=0;
+        if(2*k>=n)
+        {
+            for(int i=0;i<n-1;i++)
+            {
+                if(prices[i]<prices[i+1])
+                    x+=(prices[i+1]-prices[i]);
+            }
+            return x;
+        }
+        vector<vector<vector<int>> > dp(n+1,vector<vector<int>>(k+1,vector<int>(2,-1)));
+        
+        return solve(0,prices,k,0,n,dp);
+    }
+};

@@ -1,0 +1,57 @@
+//time complexity of below solution is O(N^3) but we can reduce it to N^2LogN 
+//First make an vector in which store all the pairs sum then sort this array our problem now reduce to
+//find the two elemets from new array which sums to target sum...,,In this sapce complexit is N^2 and
+//time complexit is N^2LogN
+
+class Solution {
+public:
+    vector<vector<int>> fourSum(vector<int>& nums, int target) {
+        
+        int n=nums.size();
+        if(n<=3)
+        {
+            vector<vector<int>>tt;
+            return tt;
+        }
+        // vector<vector<int>>ans;
+        sort(nums.begin(),nums.end());
+        set<vector<int>>st;
+        for(int i=0;i<n-3;i++)
+        {
+            for(int j=i+1;j<n-2;j++)
+            {
+                int x=nums[i];
+                int y=nums[j];
+                //we have to find j+1 to n
+                int s=j+1;
+                int e=n-1;
+                while(s<e)
+                {
+                    int sum=x+y+nums[s]+nums[e];
+                    if(sum==target)
+                    {
+                        vector<int>temp(4);
+                        temp[0]=x; temp[1]=y;
+                        temp[2]=nums[s]; temp[3]=nums[e];
+                        // ans.push_back(temp);
+                        st.insert(temp);
+                        s+=1;
+                        e-=1;
+                    }
+                    else if(sum>target)
+                        e-=1;
+                    else
+                        s+=1;
+                }
+            }
+        }
+        int pos=0;
+        int xxx=st.size();
+         vector<vector<int>>ans(xxx,vector<int>(4,0));
+        for(auto it:st)
+            ans[pos++]=it;
+       
+        return ans;
+        
+    }
+};

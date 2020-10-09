@@ -1,0 +1,27 @@
+class Solution {
+public:
+    int dp[102][102];
+    void init()
+    {
+        memset(dp,-1,sizeof(dp));
+    }
+    int solve(int m,int n)
+    {
+         if(m==1 or n==1)
+            return 1;
+        
+        //cout<<dp[m][n]<<endl;
+        if(dp[m][n]!=-1)
+            return dp[m][n];
+        
+        int x=solve(m-1,n);
+        int y=solve(m,n-1);
+        return dp[m][n]=x+y;
+    }
+    int uniquePaths(int m, int n) {
+        
+        init();
+        return solve(m,n);
+       
+    }
+};

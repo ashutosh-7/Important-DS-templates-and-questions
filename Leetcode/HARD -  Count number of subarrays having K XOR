@@ -1,4 +1,4 @@
-//same as count number of subarrays having sum = 0, because prefix XOR with given  K gives the xor which we have to find 
+//same as count number of subarrays having sum = 0, because prefix XOR with given  K gives the xor which we have to  find 
 
 
 int Solution::solve(vector<int> &A, int B) {

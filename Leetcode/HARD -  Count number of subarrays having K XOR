@@ -1,0 +1,34 @@
+//same as count number of subarrays having sum = 0, because prefix XOR with given  K gives the xor which we have to find 
+
+
+int Solution::solve(vector<int> &A, int B) {
+        
+        map<int,int>count;
+        int n=A.size();
+        for(int i=1;i<n;i++)
+            A[i]^=A[i-1];
+            
+        int ans=0;
+        count[A[0]]=1;
+        if(A[0]==B)
+        ans=1;
+        
+        // for(int i=0;i<n;i++)
+        // cout<<A[i]<<" ";
+        // cout<<endl;
+        for(int i=1;i<n;i++)
+        {
+            int total=A[i];
+            int need=total^B;
+            if(A[i]==B)
+            ans+=1;
+            if(count.find(need)!=count.end())
+            ans+=count[need];
+            
+            count[A[i]]+=1;
+        }
+        return ans;
+        
+    
+}
+

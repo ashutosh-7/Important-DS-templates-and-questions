@@ -1,0 +1,29 @@
+//We can use hashmap to find that if node is already visited or not
+//We can use slow and fast pointer to solve it in O(1) space complexity
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool hasCycle(ListNode *head) {
+        
+        ListNode* slow=head;
+        ListNode* fast=head;
+        if(head==NULL)
+            return false;
+        while(slow->next!=NULL and fast->next!=NULL and fast->next->next!=NULL)
+        {
+            slow=slow->next;
+            fast=fast->next->next;
+            if(slow==fast)
+                return true;
+        }
+        return false;
+    }
+};

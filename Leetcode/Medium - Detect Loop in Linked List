@@ -1,0 +1,48 @@
+//Using slow and fast pointer -> First move slow and fast pointer to the node at which slow==fast
+//after this move one one step slow and fast and where again they meet is the point where loop starts
+
+//Method 2 is using hasing , we can insert node in map and when we encounter again that node we can say that loop starts from there
+
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode *detectCycle(ListNode *head) {
+        
+        if(head==NULL)
+            return head;
+        ListNode* slow=head;
+        ListNode* fast=head;
+        
+        int flag=0;
+        while(slow->next!=NULL and fast->next!=NULL and fast->next->next!=NULL)
+        {
+            slow=slow->next;
+            fast=fast->next->next;
+            if(slow==fast)
+            {
+                flag=1;
+                break;
+            }
+        }
+        if(flag==0)
+            return NULL;
+        
+        slow=head;
+        while(slow->next!=NULL and head->next!=NULL)
+        {
+            if(slow==fast)
+                return slow;
+            slow=slow->next;
+            fast=fast->next;
+        }
+         return NULL;           
+    }
+};

@@ -1,0 +1,80 @@
+// We can solve by reversing half of the linked list and compares that both the half linked list are equal or not
+
+//we can also solve it using stacks...first traverse the linked list and push the elements into stacks
+//after this again traverse the linked list and the pop the elements from stack if they are same
+//if size of stack 0 then linked list is palindrome else not palindrome
+
+
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    int lengthList(ListNode* temp)
+    {
+        int ans=0;
+        while(temp!=NULL)
+        {
+            ans+=1;
+            temp=temp->next;
+        }
+        return ans;
+    }
+    bool isPalindrome(ListNode* head) {
+        
+        
+        int len=lengthList(head);
+        if(len<=1)
+            return true;
+        ListNode* half=head;
+        int count=0;
+        ListNode* prev=NULL;
+        while(count!=(len+1)/2)
+        {
+            count+=1;
+            prev=half;
+            half=half->next;
+        }
+        ListNode* newHead=prev;
+        prev=NULL;
+        while(head!=half)
+        {
+            if(prev==NULL)
+            {
+                ListNode* temp=head->next;
+                prev=head;
+                head->next=NULL;
+                head=temp;
+            }
+            else
+            {
+                ListNode* temp=head->next;
+                head->next=prev;
+                prev=head;
+                head=temp;
+            }
+        }
+        if(len%2!=0)
+            newHead=newHead->next;
+        while(newHead!=NULL and half!=NULL)
+        {
+            if(newHead->val==half->val)
+            {
+                newHead=newHead->next;
+                half=half->next;
+            }
+            else
+                return false;
+        }
+            return true;
+        
+    }
+};

@@ -1,0 +1,80 @@
+//We can reverse every elements at K distance easily and points first node of K the list to last node of K+1 list
+//We can also use stacks to reverse the list , first push the elements into stack and if size of stacks is K then pop the elements and make new linked list
+
+
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    int lengthList(ListNode* temp)
+    {
+        int len=0;
+        while(temp!=NULL)
+        {
+            len+=1;
+            temp=temp->next;
+        }
+        return len;
+    }
+    ListNode* reverseKGroup(ListNode* head, int k) {
+        
+        int len=lengthList(head);
+        int times=len/k;
+        ListNode* newHead;
+        cout<<len<<" "<<times<<endl;
+        ListNode* last=head;
+        ListNode* prev=NULL;
+        ListNode* first=head;
+        for(int i=0;i<times;i++)
+        {
+            ListNode* store=head;
+          
+            for(int j=0;j<k;j++)
+            {
+                if(prev==NULL)
+                {
+                    
+                    prev=head;
+                    ListNode* temp=head->next;
+                    head->next=NULL;
+                    head=temp;
+                }
+                else
+                {
+                    ListNode* temp=head->next;
+                    head->next=prev;
+                    prev=head;
+                    head=temp;
+                }
+                last=prev;
+            }
+            // cout<<first->val<<" "<<last->val<<" "<<prev->val<<" "<<head->val<<endl;
+            if(i==0)
+            {
+                newHead=last;
+            }
+            else 
+            {
+                // cout<<first->val<<" "<<last->val<<endl;
+                first->next=last;
+            }
+            if(i==times-1)
+            {
+                if(store!=NULL)
+                store->next=head;
+            }
+            first=store;
+           
+        }
+        return newHead;
+    }
+};

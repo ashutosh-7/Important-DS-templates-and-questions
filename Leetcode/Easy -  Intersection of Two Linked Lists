@@ -1,0 +1,72 @@
+//First find the length of both the linked list and find their differences and move the linked list from head to difference so that both the linked 
+//list length after that are same, after that move linked list with same one point and check their
+//addresses they are equal or not and return the answer.
+
+//Another appraoch in O(N^2)  check from every node to every node
+//also we can use hashmaps to store address of node
+//we can also modify the linked list and have one variable attach with every node that is flag and we increment /
+//it if we visit this node
+
+
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    int lengthList(ListNode* temp)
+    {
+        int ans=0;
+        while(temp!=NULL)
+        {
+            ans+=1;
+            temp=temp->next;
+        }
+        return ans;
+    }
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        
+        int len1=lengthList(headA);
+        int len2=lengthList(headB);
+        int diff=abs(len1-len2);
+        
+        if(len1>len2)
+        {
+            int count =0;
+            while(count!=diff)
+            {
+                count+=1;
+                headA=headA->next;
+            }
+        }
+        else if(len2>len1)
+        {
+            int count =0;
+            while(count!=diff)
+            {
+                count+=1;
+                headB=headB->next;
+            }
+        }
+        
+        //we reach at same length
+        // cout<<headA->val<<" "<<headB->val<<endl;
+        while(headA!=NULL and headB!=NULL)
+        {
+            
+            if(headA==headB)
+                return headA;
+            headA=headA->next;
+            headB=headB->next;
+        }
+        
+        return NULL;
+        
+        
+    }
+};

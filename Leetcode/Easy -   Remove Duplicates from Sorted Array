@@ -1,0 +1,32 @@
+class Solution {
+public:
+    
+    int removeDuplicates(vector<int>& nums) {
+        
+        int n=nums.size();
+        if(n<=1)
+            return n;
+        int point=-1;
+        int length=n;
+        for(int i=1;i<n;i++)
+        {
+            if(nums[i-1]==nums[i])
+            {
+                if(point==-1)
+                point=i;
+                length-=1;
+            }
+            else
+            {
+                if(point!=-1)
+                {
+                    nums[point]=nums[i];
+                    point+=1;
+                }
+            }
+        }
+        return length;
+        
+        
+    }
+};

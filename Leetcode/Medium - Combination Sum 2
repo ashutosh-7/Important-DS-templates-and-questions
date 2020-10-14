@@ -1,0 +1,36 @@
+class Solution {
+public:
+    vector<vector<int>>ans;
+    vector<int>temp;
+    vector<int>arr;
+    set<vector<int>>ans2;
+    int n;
+    void solve(int id, int target)
+    {
+        if(target<0 or id>n)
+            return ;
+        if(target==0)
+        {
+            ans.push_back(temp);
+            return ;
+        }
+        
+        for(int j=id;j<n;j++)
+        {
+           if(j>id and arr[j-1]==arr[j]) continue;   //remove duplicates    
+            temp.push_back(arr[j]);
+            solve(j+1,target-arr[j]);
+            temp.pop_back();
+        }
+        return ;
+    }
+    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+        
+        arr=candidates;
+        n=arr.size();
+        sort(arr.begin(),arr.end());
+        solve(0,target);
+        
+        return ans;
+    }
+};

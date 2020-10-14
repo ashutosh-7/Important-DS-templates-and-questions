@@ -1,0 +1,39 @@
+#include <bits/stdc++.h>
+using namespace std;
+vector<string>ans;
+        void solve(int n, string s,int i)
+        {
+            if(i==n)
+            {
+                ans.push_back(s);
+            }
+            else{
+            for(int j=i;j<=n;j++)
+            {
+                swap(s[i],s[j]);
+                solve(n,s,i+1);
+                swap(s[i],s[j]);
+            }}
+        }
+
+
+int main() {
+	
+	int t;
+	cin>>t;
+	while(t--){
+	    
+	    string s;
+	    cin>>s;
+	    int n=s.size();
+        solve(n-1,s,0);
+        sort(ans.begin(),ans.end());
+        for(auto it:ans)
+        cout<<it<<" ";
+        cout<<endl;
+        ans.clear();
+	}
+	
+	
+	return 0;
+}

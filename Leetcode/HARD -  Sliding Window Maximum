@@ -1,0 +1,33 @@
+class Solution {
+public:
+    vector<int> maxSlidingWindow(vector<int>& nums, int k) {
+         deque<int>q;
+        vector<int>ans;
+        int n=nums.size();
+        for(int i=0;i<k;i++)
+        {
+            while(!q.empty() and nums[i]>=nums[q.back()])
+            {
+                q.pop_back();
+            }
+            q.push_back(i);
+        }
+        ans.push_back(nums[q.front()]);
+        for(int i=k;i<n;i++)
+        {
+            //remove elements which is not in this window
+             while(!q.empty() and q.front()<=(i-k))
+            {
+                q.pop_front();
+            }
+            //remove minimums
+             while(!q.empty() and nums[i]>=nums[q.back()])
+            {
+                q.pop_back();
+            }
+            q.push_back(i);
+            ans.push_back(nums[q.front()]);
+        }
+        return ans;
+    }
+};

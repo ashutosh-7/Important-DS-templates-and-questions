@@ -1,0 +1,42 @@
+struct Node
+{
+    int data;
+    struct Node* left;
+    struct Node* right;
+    
+    Node(int x){
+        data = x;
+        left = right = NULL;
+    }
+};*/
+// function should print the topView of the binary tree
+map<int,pair<Node*, int>>mp;  //it stores distance from root, address, level
+void solve(Node* root,int dist,int level)
+{
+    if(root==NULL)
+    return;
+    
+    if(mp.find(dist)==mp.end())
+    {
+        mp[dist]={root,level};
+    }
+    else
+    {
+        if(mp[dist].second>level)
+        mp[dist]={root,level};
+    }
+    solve(root->left,dist-1,level+1);
+    solve(root->right,dist+1,level+1);
+}
+
+
+void topView(struct Node *root)
+{
+    mp.clear();
+    solve(root,0,0);
+    for(auto it:mp)
+    cout<<it.second.first->data<<" ";
+    
+}
+
+

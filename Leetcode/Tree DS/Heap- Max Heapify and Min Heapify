@@ -1,0 +1,70 @@
+	/**
+	*    author:  accesss_denied
+	**/
+	#include <bits/stdc++.h>
+	using namespace std;
+	#define ff first
+	#define ss second
+	#define pb push_back
+	#define endl "\n"
+	#define fast ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+	int mod=1e9+7;			
+	const int MAX=30;
+	vector<int>heap;
+	int n;
+
+				void maxHeapify(int root)
+				{
+					int left=2*root;
+					int right=2*root+1;
+					int largest=root;
+					if(left<=n and heap[largest]<heap[left])
+					largest=left;
+					if(right<=n and heap[largest]<heap[right])
+					largest=right;
+					if(largest!=root)
+					{
+						swap(heap[root], heap[largest]);
+						maxHeapify(largest);
+					}
+				}
+
+				void minHeapify(int root)
+				{
+					int left=2*root;
+					int right=2*root+1;
+					int smallest=root;
+					if(left<=n and heap[smallest]>heap[left])
+					smallest=left;
+					if(right<=n and heap[smallest]>heap[right])
+					smallest=right;
+					if(smallest!=root)
+					{
+						swap(heap[root], heap[smallest]);
+						minHeapify(smallest);
+					}
+				}
+
+	int32_t  main() {
+				fast
+				#ifndef ONLINE_JUDGE
+				freopen("input.txt","r",stdin);
+				freopen("output.txt","w",stdout);
+				#endif
+
+				cin>>n;
+				heap.resize(4*n+1,0);
+				for(int i=1;i<=n;i++)
+				cin>>heap[i];
+				for(int i=n;i>=1;i--)
+				minHeapify(i);
+
+				for(int i=1;i<=n;i++)
+				cout<<heap[i]<<" ";
+
+				
+				return 0;
+			}	
+
+
+

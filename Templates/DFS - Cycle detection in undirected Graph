@@ -1,0 +1,74 @@
+	/**
+	*    author:  accesss_denied
+	**/
+	#include <bits/stdc++.h>
+	using namespace std;
+	#define int long long int
+	#define ff first
+	#define ss second
+	#define pb push_back
+	#define endl "\n"
+	#define fast ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+	int mod=1e9+7;			
+	int inf=1e18;
+ int visit[10004];
+    bool dfs(int source,vector<int>g[],int parent)
+    {
+        visit[source]=1;
+        for(auto it:g[source])
+        {
+			if(visit[it]==0){
+            dfs(it,g,source);
+			}
+            else if(visit[it]==1 and it!=parent)
+            return true;
+        }
+        return false;
+    }
+bool isCyclic(vector<int> g[], int V)
+{
+   // Your code here
+   memset(visit,0,sizeof(visit));
+   	bool ans=false;
+		
+      for(int i=0;i<V;i++)
+      {
+          if(visit[i]==0)
+          {
+              ans=dfs(i,g,-1);
+              if(ans==true)
+              return ans;
+          }
+      }
+	  return false;
+}
+
+	int32_t  main() {
+				fast
+				#ifndef ONLINE_JUDGE
+				freopen("input.txt","r",stdin);
+				freopen("output.txt","w",stdout);
+				#endif
+
+				int t;
+				cin>>t;
+				while(t--)
+				{
+					int n,m;
+					cin>>n>>m;
+					vector<int>arr[n];
+					for(int i=0;i<m;i++)
+					{
+						int a,b;
+						cin>>a>>b;
+						arr[a].pb(b);
+						arr[b].pb(a);
+					}
+					cout<<isCyclic(arr,n)<<endl;
+					
+				}
+				return 0;
+			}	
+
+
+

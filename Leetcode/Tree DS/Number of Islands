@@ -1,0 +1,47 @@
+class Solution {
+public:
+    int dx[4]={-1,1,0,0};
+    int dy[4]={0,0,1,-1};
+    int M,N;
+    bool valid(int x,int y)
+    {
+        if(x>=0 and x<M and y>=0 and y<N)
+            return true;
+        return false;
+    }
+
+    void dfs(vector<vector<int>>&visit,vector<vector<char>>&arr,int x,int y)
+    {
+        visit[x][y]=1;
+        for(int i=0;i<4;i++)
+        {
+            int xx=dx[i]+x;
+            int yy=dy[i]+y;
+            if(valid(xx,yy) and visit[xx][yy]==0 and arr[xx][yy]=='1')
+                dfs(visit,arr,xx,yy);
+        }
+        
+    }
+    int numIslands(vector<vector<char>>& grid) {
+        int ans=0;
+        int m=grid.size();
+        int n=grid[0].size();
+        M=m; N=n;
+        if(m==0)
+            return ans;
+        vector<vector<int>>visit(m,vector<int>(n,0));
+        for(int i=0;i<m;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                if(visit[i][j]==0 and grid[i][j]=='1')
+                {
+                    ans+=1;
+                    dfs(visit,grid,i,j);
+                }
+                
+            }
+        }
+        return ans;
+    }
+};

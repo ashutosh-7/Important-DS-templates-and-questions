@@ -1,0 +1,34 @@
+class Solution {
+public:
+    int n1,n2;
+    
+    int solve(string &a, string &b,int i,int j, vector<vector<int>>&dp)
+    {
+        if(i>=n1 and j>=n2)
+            return 0;
+        if(i>=n1)
+            return n2-j;
+        if(j>=n2)
+            return n1-i;
+        if(dp[i][j]!=-1)
+            return dp[i][j];
+        
+        int op1=INT_MAX;
+        if(a[i]==b[j])
+        {
+            op1=solve(a,b,i+1,j+1,dp);
+        }
+        int op2=1+solve(a,b,i+1,j,dp); //delete
+        int op3=1+solve(a,b,i,j+1,dp); //insert
+        int op4=1+solve(a,b,i+1,j+1,dp); //replace
+        return dp[i][j]=min(op1,min(op2,min(op3,op4)));
+    }
+        int minDistance(string word1, string word2) {
+        
+            n1=word1.size();
+            n2=word2.size();
+            vector<vector<int>>dp(n1,vector<int>(n2,-1));
+            return solve(word1,word2,0,0,dp);
+            
+    }
+};

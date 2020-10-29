@@ -1,0 +1,59 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define pb push_back
+#define endl "\n"
+#define fast ios_base::sync_with_stdio(false);cin.tie(NULL);cout.tie(NULL);
+ll mod=1e9+7;
+ll arr[1000];
+ll dp[101][101];
+			ll sum2(ll x,ll y)
+			{
+				ll ans=0;
+				for(ll i=x;i<=y;i++)
+				{
+					ans+=arr[i];
+					ans%=100;
+				}
+				return ans;
+			}
+			ll solve(ll i,ll j)
+			{
+				if(i>=j)
+				return 0;
+				if(dp[i][j]!=-1)
+				return dp[i][j];
+				ll smogg=LLONG_MAX;
+				for(ll x=i;x<j;x++)
+				{
+					smogg=min(smogg,solve(i,x)+solve(x+1,j)+sum2(i,x)*sum2(x+1,j));
+				}
+				return dp[i][j]=smogg;
+			}
+        
+int main() {
+				fast
+				#ifndef ONLINE_JUDGE
+               freopen("input.txt","r",stdin);
+               freopen("output.txt","w",stdout);
+               #endif
+               ll n;
+                // cin>>n;
+              while(cin>>n)
+              {
+               	// memset(arr,0,sizeof(arr));
+               	// memset(dp,-1,sizeof(dp));
+               	// for(ll i=0;i<1000;i++) arr[i]=0;
+               		for(ll i=0;i<101;i++ ) 
+               			for( ll j=0;j<101;j++) 
+               				dp[i][j]=-1;
+               	for(ll i=1;i<=n;i++)
+               	cin>>arr[i];
+               	// cout<<"jkn";
+               	cout<<solve((ll)1,n)<<endl;
+               		               	
+
+			   }
+
+                return 0;
+            }

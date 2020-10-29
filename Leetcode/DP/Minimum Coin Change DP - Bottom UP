@@ -1,0 +1,27 @@
+class Solution {
+public:
+    int solve(vector<int>& coins,int x,int id,vector<int>&dp)
+    {
+        if(x==0)
+            return 0;
+        if(x<0 or id>=coins.size())
+            return INT_MAX-1;
+        //cout<<x<<" "<<dp[x]<<endl;
+        if(dp[x]!=-1)
+            return dp[x];
+        int op1=1+solve(coins,x-coins[id],0,dp);   //hm ese shuru se esliye kar rahe hai q ki ese lene ke baad kya pata , shuru mai kuch aur v le skte ho jissase minimum aaye
+        int op2=solve(coins,x,id+1,dp);
+        return dp[x]=min(op1,op2);
+            
+    }
+    int coinChange(vector<int>& coins, int amount) {
+        int n=coins.size();
+      
+        vector<int>dp(amount+5,-1);
+        dp[0]=0;
+        int ans=solve(coins,amount,0,dp);
+        if(ans+1==INT_MAX)
+            ans=-1;
+        return ans;
+    }
+};

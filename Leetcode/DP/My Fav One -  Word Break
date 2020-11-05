@@ -1,0 +1,33 @@
+class Solution {
+public:
+    string s;
+    bool solve(int id1,int id2,vector<string>& arr,vector<vector<int>>&dp)
+    {
+        if(id1==s.size())
+            return true;
+            
+        if(id2>=arr.size())
+            return false;
+        if(dp[id1][id2]!=-1)
+            return dp[id1][id2];
+        bool x=false;
+        bool y=false;
+        int len=arr[id2].size();
+        int rem=s.size()-id1;
+        if(rem>=len)
+        {
+            string s1=s.substr(id1,len);
+            if(s1==arr[id2])
+                x=solve(id1+len,0,arr,dp);
+        }
+        y=solve(id1,id2+1,arr,dp);
+        return dp[id1][id2]=x or y;
+    }
+    bool wordBreak(string s1, vector<string>& arr) {
+        s=s1;
+        int n1=s1.size();
+        int n2=arr.size();
+        vector<vector<int>>dp(n1,vector<int>(n2,-1));
+        return solve(0,0,arr,dp);
+    }
+};

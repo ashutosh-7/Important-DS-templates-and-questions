@@ -1,0 +1,32 @@
+#include <bits/stdc++.h>
+using namespace std;
+int n,x,y,z;
+int dp[4005];
+            int solve(int len)
+            {
+                if(len==0)
+                return 0;
+                if(len<0)
+                return INT_MAX;
+                
+                if(dp[len]!=-1)
+                return dp[len];
+                
+                int op1=1+solve(len-x);
+                int op2=1+solve(len-y);
+                int op3=1+solve(len-z);
+                return dp[len]=max(op1,max(op2,op3));
+            }
+int main() {
+        
+        int t;
+        cin>>t;
+        while(t--)
+        {
+            memset(dp,-1,sizeof(dp));
+            cin>>n>>x>>y>>z;
+            cout<<solve(n)<<endl;
+        }
+	
+	return 0;
+}
